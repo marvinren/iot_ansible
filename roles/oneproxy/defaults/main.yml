@@ -1,4 +1,5 @@
 ---
+mysql_daemon: mariadb
 oneproxy_port: 3307
 mysql_user: geic
 mysql_password: D58788CC6CD75A2A9A05955A4C95CF92459C18E1

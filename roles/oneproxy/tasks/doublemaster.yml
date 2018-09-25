@@ -1,0 +1,42 @@
+---
+- name: config my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  notify: restart mysql
+
+- name: Stop replication.
+  mysql_replication: mode=stopslave
+  ignore_errors: true
+
+- name: Check master replication status.
+  mysql_replication: 
+    mode: getmaster
+    login_user: root
+    login_password: "{{mysql_root_password}}"
+  register: master
+  
+
+- name: Check slave replication status.
+  mysql_replication:
+    mode: getslave
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_password }}"
+  ignore_errors: true
+  register: slave
+
+- name: debug task
+  debug:
+    msg: "{{master}}, {{slave}}"
+
+- name: Configure replication on the slave.
+  mysql_replication:
+    mode: changemaster
+    master_host: "{{ master_node }}"
+    master_user: "{{ mysql_user }}"
+    master_password: "{{ mysql_password }}"
+    master_log_file: "{{ master.File }}"
+    master_log_pos: "{{ master.Position }}"
+
+- name: Start replication.
+  mysql_replication: mode=startslave

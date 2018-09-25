@@ -4,6 +4,10 @@
 [prod]
 10.12.3.[2:11] ansible_ssh_user=root ansible_ssh_pass=Asiainfo@2018
 
+[mysql]
+10.12.3.2 master_node=10.12.3.9 server_id=1 mysql_server_id=1
+10.12.3.9 master_node=10.12.3.2 server_id=2 mysql_server_id=2
+
 [redis-master]
 10.12.3.3
 
@@ -12,19 +16,25 @@
 10.12.3.8
 10.12.3.11
 
+[redis-slave:vars]
+redis_master_ip=10.12.3.3
+
 [redis-sentinel]
-10.12.3.4 
+10.12.3.4
 10.12.3.8
 10.12.3.11
 
-[master_mysql_1]
-10.12.3.2
-[master_mysql_2]
-10.12.3.9
+[redis-sentinel:vars]
+redis_sentinel=True
 
-[mysql]
-10.12.3.2
-10.12.3.9
+[elasticsearch]
+10.12.3.5 instance_name=node01
+10.12.3.7 instance_name=node02
+10.12.3.10 instance_name=node03
+
+[elasticsearch:vars]
+elasticsearch_hosts = ["10.12.3.5:9300", "10.12.3.7:9300", "10.12.3.10:9300"]
+
 
 [app]
 10.12.3.8
