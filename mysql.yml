@@ -1,0 +1,65 @@
+---
+- name: install mysql
+  hosts: mysql
+  vars:
+    - mysql_root_password: 4KRckdKc8d5YMiMh
+      mysql_port: "3306"
+      mysql_bind_address: '0.0.0.0'
+      mysql_datadir: /data/mysql
+      mysql_database:
+      - name: geic_manage
+        encoding: utf8
+        collation: utf8_general_ci
+      mysql_users:
+      - name: geic
+        host: "%"
+        password: Asiainfo@2018
+        priv: "geic_manage.*:ALL"
+    roles:
+    - role: geerlingguy.mysql 
+      become: yes
+      
+
+# - name: install master mysql server
+#   hosts: master_mysql
+#   vars:
+#     - mysql_root_password: Asiainfo@2018
+#       mysql_databases:
+#       - name: geic_manage
+#         encoding: utf8
+#         collation: utf8_general_ci
+#       mysql_users:
+#       - name: geic
+#         host: "%"
+#         password: Asiainfo@2018
+#         priv: "geic_manage.*:ALL"
+#       mysql_server_id: "1"
+#       mysql_replication_master: '10.12.3.2'
+#       mysql_replication_role: 'master'
+#       mysql_max_binlog_size: "100M"
+#       mysql_binlog_format: "ROW"
+#       mysql_expire_logs_days: "10"
+#   roles:
+#     - role: geerlingguy.mysql 
+#       become: yes 
+# - name: install slave mysql server
+#   hosts: slave_mysql
+#   vars:
+#     - mysql_root_password: Asiainfo@2018
+#       mysql_databases:
+#       - name: geic_manage
+#         encoding: utf8
+#         collation: utf8_general_ci
+#       mysql_users:
+#       - name: geic
+#         host: "%"
+#         password: Asiainfo@2018
+#         priv: "geic_manage.*:ALL"
+#       mysql_server_id: "2"
+#       mysql_replication_master: '10.12.3.2'
+#       mysql_replication_role: 'slave'
+#       mysql_replication_master_user: geic
+#       mysql_replication_master_password: Asiainfo@2018
+#   roles:
+#     - role: geerlingguy.mysql 
+#       become: yes 

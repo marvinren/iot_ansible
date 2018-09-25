@@ -1,0 +1,7 @@
+- hosts: springboard
+  roles:
+  - role: sshkey
+
+- hosts: prod
+  roles:
+  - role: sshkey

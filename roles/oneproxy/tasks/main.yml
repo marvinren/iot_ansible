@@ -1,0 +1,21 @@
+---
+- name: Download the oneproxy
+  get_url: url=http://www.onexsoft.com/software/oneproxy-rhel6-linux64-v6.2.0-ga.tar.gz dest=/opt/oneproxy-rhel6-linux64-v6.2.0-ga.tar.gz
+
+- name: Extract the oneproxy tar file.
+  unarchive: src=/opt/oneproxy-rhel6-linux64-v6.2.0-ga.tar.gz dest=/opt creates=/opt/oneproxy copy=no
+
+- name: Config oneproxy config file.
+  template:
+    src: proxy.conf.j2
+    dest: /opt/oneproxy/conf/proxy.conf
+
+- name: kill oneproxy
+  shell: ps auxf|grep -v grep|grep oneproxy|awk '{ print $2 }'|xargs kill -9
+  ignore_errors: true
+
+- name: template startup.sh
+  template: src=startup.sh.j2 dest=/opt/oneproxy/startup.sh
+
+- name: startup oneproxy
+  shell: sh /opt/oneproxy/startup.sh

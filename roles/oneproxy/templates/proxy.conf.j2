@@ -1,0 +1,32 @@
+[oneproxy]
+keepalive               = 1
+event-threads            = 4
+log-file               = log/oneproxy.log
+pid-file               = log/oneproxy.pid
+lck-file               = log/oneproxy.lck
+
+proxy-auto-readonly         = 0
+proxy-forward-clientip       = 0
+proxy-trans-debug          = 1
+mysql-version            = 5.5.60
+
+admin-address            = 0.0.0.0:4041
+proxy-address            = 0.0.0.0:{{oneproxy_port}}
+proxy-master-addresses       = {{mysql_master_node}}@oneproxy
+proxy-slave-addresses        = {{mysql_slave_node}}@oneproxy
+
+proxy-user-list.1          = {{mysql_user}}/{{mysql_password}}@{{mysql_database}}
+
+proxy-part-template         = conf/template.txt
+proxy-part-tables          = conf/part.txt
+proxy-charset            = utf8_general_ci
+
+proxy-secure-client         = 127.0.0.1
+proxy-license            = 32C54560E06EFF3E
+proxy-httpserver          = 0.0.0.0:8080
+proxy-httpauth           = admin:admin
+proxy-httptitle           = OneProxy
+
+proxy-group-security        = oneproxy:0
+proxy-group-policy         = oneproxy:4
+

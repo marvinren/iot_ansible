@@ -1,0 +1,10 @@
+---
+- name: Install oneproxy
+  hosts: slave_mysql
+  gather_facts: false
+  vars:
+  - mysql_master_node: 10.12.3.2:3306
+    mysql_slave_node: 10.12.3.9:3306
+  roles:
+  - role: oneproxy
+    become: yes

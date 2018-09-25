@@ -1,0 +1,8 @@
+---
+oneproxy_port: 3307
+mysql_user: geic
+mysql_password: D58788CC6CD75A2A9A05955A4C95CF92459C18E1
+mysql_database: geic_manage
+mysql_master_node: ''
+mysql_slave_node: ''
+

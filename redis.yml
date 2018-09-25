@@ -1,0 +1,22 @@
+- name: configure the master redis server
+  hosts: redis-master
+  roles:
+    - DavidWittman.redis
+
+- name: configure redis slaves
+  hosts: redis-slave
+  vars:
+    - redis_slaveof: 10.12.3.3 6379
+  roles:
+    - DavidWittman.redis
+
+- name: configure redis sentinel nodes
+  hosts: redis-sentinel
+  vars:
+    - redis_sentinel: True
+    - redis_sentinel_monitors:
+      - name: master01
+        host: 10.12.3.3
+        port: 6379
+  roles:
+    - DavidWittman.redis
