@@ -3,9 +3,9 @@
     - role: elastic.elasticsearch
   vars:
     es_instance_name: "{{instance_name}}"
-    es_data_dirs:
-      - "/data/elasticsearch/data"
-    es_log_dir: "/data/elasticsearch/logs"
+    # es_data_dirs:
+    #   - "/data/elasticsearch/data"
+    # es_log_dir: "/data/elasticsearch/logs"
     es_heap_size: "1g"
     es_api_basic_auth_username: geic
     es_api_basic_auth_password: Asiainfo@2018
@@ -20,4 +20,9 @@
     es_scripts: false
     es_templates: false
     es_version_lock: false
+
+
+- hosts: elasticsearch
+  roles:
+    - role: elasticsearch.ik
       
