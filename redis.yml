@@ -30,7 +30,7 @@
 - name: configure redis slaves
   hosts: redis-slave
   vars:
-    - redis_slaveof: {{redis_master_ip}} 6379
+    - redis_slaveof: "{{redis_master_ip}} 6379"
   roles:
     - DavidWittman.redis
 
@@ -39,7 +39,7 @@
   vars:
     - redis_sentinel_monitors:
       - name: master01
-        host: {{redis_master_ip}}
+        host: "{{redis_master_ip}}"
         port: 6379
   roles:
     - DavidWittman.redis

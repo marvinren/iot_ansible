@@ -6,6 +6,9 @@ port = 3306
 socket = /var/lib/mysql/mysql.sock
 
 [mysqld]
+server-id={{mysql_server_id}}
+log-bin=mysql-bin
+
 port = 3306
 bind-address = 0.0.0.0
 datadir = /data/mysql/data
@@ -59,22 +62,9 @@ innodb_log_buffer_size = 8M
 innodb_flush_log_at_trx_commit = 1
 innodb_lock_wait_timeout = 50
 
-
-server-id = {{server_id}}
-auto_increment_offset = {{server_id}}
-auto_increment_increment = 2
-log-slave-updates = true
-log-bin=mysql-binbinlog_format=mixed
-relay-log=relay-bin
-relay-log-index=salve-relay-bin.index
-
-
 [mysqldump]
 quick
 max_allowed_packet = 64M
 
 [mysqld_safe]
 pid-file = /var/run/mariadb/mariadb.pid
-
-
-

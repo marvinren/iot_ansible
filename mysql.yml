@@ -2,7 +2,7 @@
 - name: install mysql
   hosts: mysql
   vars:
-    - mysql_root_password: 4KRckdKc8d5YMiMh
+    - mysql_root_password: Asiainfo@2018
       mysql_port: "3306"
       mysql_bind_address: '0.0.0.0'
       mysql_datadir: /data/mysql/data
@@ -23,4 +23,19 @@
       mysql_replication_user: []
   roles:
   - role: geerlingguy.mysql 
+    become: yes
+
+
+- name: Install oneproxy (double master)
+  hosts: mysql
+  gather_facts: false
+  vars:
+    mysql_user: geic
+    mysql_password: Asiainfo@2018
+    mysql_root_password: Asiainfo@2018
+    mysql_secret_password: D58788CC6CD75A2A9A05955A4C95CF92459C18E1
+    master_01: 10.12.3.2
+    master_02: 10.12.3.9
+  roles:
+  - role: oneproxy
     become: yes

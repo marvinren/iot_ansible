@@ -1,0 +1,8 @@
+---
+- name: deploy database
+  hosts: mysql_master
+  gather_facts: false
+  become: yes
+  roles:
+  - role: renzq.mysql.import
+

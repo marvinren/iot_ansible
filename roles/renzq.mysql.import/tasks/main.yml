@@ -1,0 +1,21 @@
+---
+- name: Copy the sql file to remote host.
+  copy: 
+    src: "{{ role_path }}/files/{{item}}"
+    dest: "/tmp"
+  with_items:
+  - geic_manage.sql
+  - geic_region.sql
+
+- name: Import geic_manage sql files
+  mysql_db:
+    state: import
+    name: geic_manage
+    target: "/tmp/geic_manage.sql"
+    login_user: geic
+    login_password: Asiainfo@2018
+  # with_items:
+  # - geic_manage.sql
+  # - geic_region.sql
+    
+

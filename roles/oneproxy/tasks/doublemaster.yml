@@ -1,12 +1,35 @@
 ---
+- name: Create a new database with name 'geic_manage'
+  mysql_db:
+    name: geic_manage
+    encoding: utf-8
+    login_user: "root"
+    login_password: "{{mysql_root_password}}"
+    state: present
+
+- name: Ensure replication user exists on master.
+  mysql_user:
+    name: "{{ mysql_user }}"
+    host: "{{ master_node | default('%') }}"
+    password: "{{ mysql_password }}"
+    priv: '*.*:ALL'
+    login_user: "root"
+    login_password: "{{mysql_root_password}}"
+    state: present
+
 - name: config my.cnf
   template:
     src: my.cnf.j2
     dest: /etc/my.cnf
   notify: restart mysql
 
+
+
 - name: Stop replication.
-  mysql_replication: mode=stopslave
+  mysql_replication: 
+    mode: stopslave
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_password }}"
   ignore_errors: true
 
 - name: Check master replication status.
@@ -37,6 +60,11 @@
     master_password: "{{ mysql_password }}"
     master_log_file: "{{ master.File }}"
     master_log_pos: "{{ master.Position }}"
+    login_user: "root"
+    login_password: "{{mysql_root_password}}"
 
 - name: Start replication.
-  mysql_replication: mode=startslave
+  mysql_replication: 
+    mode: startslave
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_password }}"
