@@ -41,5 +41,6 @@
       - name: master01
         host: "{{redis_master_ip}}"
         port: 6379
+      redis_sentinel: True
   roles:
     - DavidWittman.redis

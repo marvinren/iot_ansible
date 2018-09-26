@@ -2,13 +2,16 @@
   roles:
     - role: elastic.elasticsearch
   vars:
-    es_instance_name: {{instance_name}}
+    es_instance_name: "{{instance_name}}"
+    es_data_dirs:
+      - "/data/elasticsearch/data"
+    es_log_dir: "/data/elasticsearch/logs"
     es_heap_size: "1g"
     es_api_basic_auth_username: geic
     es_api_basic_auth_password: Asiainfo@2018
     es_config:
       cluster.name: "geic-cluster"
-      discovery.zen.ping.unicast.hosts: {{elasticsearch_hosts}}
+      discovery.zen.ping.unicast.hosts: "{{elasticsearch_hosts}}"
       http.port: 9200
       transport.tcp.port: 9300
       node.data: true
